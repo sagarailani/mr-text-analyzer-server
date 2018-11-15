@@ -20,6 +20,7 @@ def spellchecker():
 	prefix_length = 7
 	data = request.get_json()
 	text = data['text']
+	print(text)
 	spellcheck = SpellChecker(initial_capacity, max_edit_distance_dictionary, prefix_length)
 
 	dictionary_path = os.path.join("/home/sagar/Projects/mr-text-analyzer-server/spellchecker", "frequency_dictionary.txt")
@@ -32,6 +33,8 @@ def spellchecker():
 	corrections = dict()		
 	for suggestion in suggestions:		
 		corrections['text'] = suggestion.term
+		corrections['modifications'] = spellcheck.find_updated_terms(text, suggestion.term)
+		print(corrections)
 	return jsonify(corrections)
 
 # @app.route('/speech-to-text/', methods=["POST"])
