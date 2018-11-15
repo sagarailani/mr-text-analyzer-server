@@ -40,3 +40,4 @@ def parse_words(phrase, preserve_case=False):
 
 def is_acronym(word):
     return re.match(r"\b[A-Z0-9]{2,}\b", word) is not None
+

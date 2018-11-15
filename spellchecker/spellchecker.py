@@ -89,7 +89,7 @@ class SpellChecker(object):
                         self.create_dictionary_entry(key, count)
         return True
 
-    def lookup(self, phrase, verbosity, max_edit_distance=None,
+    def lookup(self, phrase, verbosity=Verbosity.TOP, max_edit_distance=None,
                include_unknown=False):
         if max_edit_distance is None:
             max_edit_distance = self._max_dictionary_edit_distance
@@ -377,6 +377,15 @@ class SpellChecker(object):
         hash_s &= self._compact_mask
         hash_s |= mask_len
         return hash_s
+
+    def find_updated_terms(self, text, updatedText):
+        textList = helpers.parse_words(text)
+        updatedTextList = helpers.parse_words(updatedText)
+        modifications = dict()
+        for word, updatedWord in zip(textList, updatedTextList):
+            if word != updatedWord:
+                modifications[word] = updatedWord
+        return modifications            
 
     @property
     def deletes(self):
